@@ -47,17 +47,25 @@ unsigned char* decompress(unsigned char* src, size_t datalen, size_t* complen)
 
 int main(int argc, char** argv)
 {
-    auto usage = "usage: lzma [-d] infile outfile";
+    auto usage = "usage: lzma [-d] [-n] infile outfile";
 
     if (argc < 3)
         std::cout << usage << std::endl;
 
     bool decomp = false;
+    bool nocomp = false;
     int paramOffset = 1;
     std::string a = argv[paramOffset];
     if (a == "-d")
     {
         decomp =true;
+        paramOffset ++;
+        if ((argc - paramOffset) < 2)
+            std::cout << usage;
+    }
+    else if (a == "-n")
+    {
+        nocomp = true;
         paramOffset ++;
         if ((argc - paramOffset) < 2)
             std::cout << usage;
@@ -88,14 +96,22 @@ int main(int argc, char** argv)
     size_t tk = 0;
 
     void* comp_data;
-
-    std::cout << "Copmressing " << len << " bytes" << std::endl;
-    if (decomp==false)
-        comp_data = compress((unsigned char*)data,len,&tk);
+    if (nocomp)
+    {
+        std::cout << "Packing " << len << " bytes" << std::endl;
+        comp_data = (void*)data;
+        tk = len;
+    }
     else
-        comp_data = decompress((unsigned char*)data,len,&tk);
-    std::cout << "Compressed size " << tk << " bytes" << std::endl;
-    delete[] data;
+    {
+        std::cout << "Compressing " << len << " bytes" << std::endl;
+        if (decomp==false)
+            comp_data = compress((unsigned char*)data,len,&tk);
+        else
+            comp_data = decompress((unsigned char*)data,len,&tk);
+        std::cout << "Compressed size " << tk << " bytes" << std::endl;
+        delete[] data;
+    }
 
 
     std::ofstream ofile;
