@@ -57,7 +57,9 @@ And the image is ready for use. In some cases it is useful to resize the image f
 
 The video must be [DMV2 encoded](https://github.com/MasterTaffer/dmv2) and compressed with LZMA using the lzmautil: compile it with the LZMA SDK.
 
-The audio must simply be in raw containerless opus format, 24000hz single channel. If you compile the Opus SDK test utility (opus_demo) it can be used.
+The audio must simply be in raw containerless opus format, 24000hz single channel. If you compile the Opus SDK test utility (opus_demo) it can be used. The output must also be processed with the lzmautil with the -n flag:
+
+    lzmautil -n output.op packed_output
 
 ## Other stuff
 
