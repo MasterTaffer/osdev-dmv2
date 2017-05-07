@@ -59,3 +59,6 @@ The video must be [DMV2 encoded](https://github.com/MasterTaffer/dmv2) and compr
 
 The audio must simply be in raw containerless opus format, 24000hz single channel. If you compile the Opus SDK test utility (test_opus_encode.exe) it can be used.
 
+## Other stuff
+
+[OSDev Wiki is a great place](http://wiki.osdev.org/Main_Page)
